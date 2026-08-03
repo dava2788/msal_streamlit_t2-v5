@@ -18,14 +18,14 @@ jobs:
         #-------------------------------
         #   Setup Node.js and React
         #-------------------------------
-      - name: Use Node.js v18.x
+      - name: Use Node.js v20.x
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 20
       - name: Install NPM dependencies
-        run: npm install --prefix msal_streamlit_authentication/frontend
+        run: npm install --prefix msal_streamlit_t2/frontend
       - name: Build React project
-        run: npm run build --prefix msal_streamlit_authentication/frontend
+        run: npm run build --prefix msal_streamlit_t2/frontend
         #-------------------------------
         #   Setup python
         #-------------------------------
@@ -53,4 +53,3 @@ jobs:
         with:
           user: __token__
           password: ${{ secrets.PYPI_API_TOKEN }}
-

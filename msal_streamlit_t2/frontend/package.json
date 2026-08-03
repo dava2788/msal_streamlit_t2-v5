@@ -13,7 +13,7 @@
   "dependencies": {
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "@azure/msal-browser": "^3.13.0",
+    "@azure/msal-browser": "^5.17.3",
     "streamlit-component-lib": "^1.4.0"
   },
   "devDependencies": {
