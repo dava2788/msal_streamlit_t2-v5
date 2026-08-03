@@ -1,10 +1,10 @@
 [tool.poetry]
-name = "msal_streamlit_t2"
-version = "1.1.5"
-description = "Streamlit Authentication library based on MSAL.JS"
+name = "msal_streamlit_t2_v5"
+version = "2.0.0"
+description = "Streamlit Authentication library based on MSAL.JS v5 (fork of mstaal/msal_streamlit_t2)"
 readme = "README.md"
-repository = "https://github.com/mstaal/msal_streamlit_t2"
-authors = ["Michael Staal-Olsen"]
+repository = "https://github.com/dava2788/msal_streamlit_t2-v5"
+authors = ["Michael Staal-Olsen", "David José Pérez Arroyo"]
 packages=[
     { include="msal_streamlit_t2" }
 ]
