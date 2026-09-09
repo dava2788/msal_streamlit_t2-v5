@@ -19,12 +19,6 @@ const Authentication = ({ args }: ComponentProps) => {
 
     const [loginToken, setLoginToken] = useState(null)
 
-    const isAuthenticated = useCallback(
-        async () => {
-            const result = await msalInstance;
-            return result.getAllAccounts().length > 0;
-        }, []);
-
     useEffect(() => {
         const fetchAccounts = async () => {
             const instance = await msalInstance;
@@ -37,18 +31,22 @@ const Authentication = ({ args }: ComponentProps) => {
                     setLoginToken(response)
                 }).catch(
                     function (error) {
+                        console.warn("[msal_streamlit_t2] acquireTokenSilent failed:", error)
                         setLoginToken(null)
                     }
                 )
             } else {
+                console.info("[msal_streamlit_t2] No cached MSAL account found — user needs to log in.")
                 setLoginToken(null)
             }
         };
-    
-        fetchAccounts().then();
+
+        fetchAccounts().catch((err) => {
+            console.error("[msal_streamlit_t2] fetchAccounts failed:", err)
+        });
     }, [])
 
-    
+
 
     useEffect(() => {
         Streamlit.setComponentValue(loginToken)
@@ -57,19 +55,27 @@ const Authentication = ({ args }: ComponentProps) => {
     }, [loginToken])
 
     const loginPopup = useCallback(async () => {
-        const instance = await msalInstance;
-        instance.loginPopup(loginRequest).then(function (response) {
-            // @ts-ignore
-            setLoginToken(response)
-        }).catch(console.error)
+        try {
+            const instance = await msalInstance;
+            instance.loginPopup(loginRequest).then(function (response) {
+                // @ts-ignore
+                setLoginToken(response)
+            }).catch((error) => console.error("[msal_streamlit_t2] loginPopup failed:", error))
+        } catch (error) {
+            console.error("[msal_streamlit_t2] loginPopup: MSAL instance unavailable:", error)
+        }
     }, [])
 
     const logoutPopup = useCallback(async () => {
-        // @ts-ignore
-        const instance = await msalInstance;
-        instance.logoutPopup(logoutRequest).then(function (response) {
-            setLoginToken(null)
-        }).catch(console.error)
+        try {
+            // @ts-ignore
+            const instance = await msalInstance;
+            instance.logoutPopup(logoutRequest).then(function (response) {
+                setLoginToken(null)
+            }).catch((error) => console.error("[msal_streamlit_t2] logoutPopup failed:", error))
+        } catch (error) {
+            console.error("[msal_streamlit_t2] logoutPopup: MSAL instance unavailable:", error)
+        }
     }, [])
 
     return (

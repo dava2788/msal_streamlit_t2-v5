@@ -12,15 +12,15 @@ export const useMsalInstance =async function (auth_config: BrowserAuthOptions, c
                     }
                     switch (level) {
                         case LogLevel.Error:
-                            console.error(message);
+                            console.error("[msal_streamlit_t2]", message);
                             return;
                         case LogLevel.Info:
                             return;
                         case LogLevel.Verbose:
-                            console.debug(message);
+                            console.debug("[msal_streamlit_t2]", message);
                             return;
                         case LogLevel.Warning:
-                            console.warn(message);
+                            console.warn("[msal_streamlit_t2]", message);
                             return;
                         default:
                             return;
